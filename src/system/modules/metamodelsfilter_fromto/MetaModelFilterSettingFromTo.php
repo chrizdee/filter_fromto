@@ -77,12 +77,24 @@ class MetaModelFilterSettingFromTo extends MetaModelFilterSetting
 				if ($arrParamValue[0])
 				{
 					$arrQuery[] = sprintf('(%s%s?)', $objAttribute->getColName(), $strMore);
-					$arrParams[] = $arrParamValue[0];
+					if ($objAttribute->get('type') == 'timestamp')
+					{
+						$date = new DateTime($arrParamValue[0]);
+						$arrParams[] = $date->getTimestamp();
+					} else {
+						$arrParams[] = $arrParamValue[0];
+					}
 				}
 				if ($arrParamValue[1])
 				{
 					$arrQuery[] = sprintf('(%s%s?)', $objAttribute->getColName(), $strLess);
-					$arrParams[] = $arrParamValue[1];
+					if ($objAttribute->get('type') == 'timestamp')
+					{
+						$date = new DateTime($arrParamValue[1]);
+						$arrParams[] = $date->getTimestamp();
+					} else {
+						$arrParams[] = $arrParamValue[1];
+					}
 				}
 			}
 			else
